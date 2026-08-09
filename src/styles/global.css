@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { scroll-padding-top: 4rem; }
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+  }
+  body {
+    @apply bg-canvas text-text font-sans antialiased;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  h1, h2, h3 { line-height: 1.15; }
+  ::selection { @apply bg-accent/30 text-text; }
+  :focus-visible { outline: 2px solid theme('colors.accent'); outline-offset: 3px; }
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { @apply bg-canvas; }
+  ::-webkit-scrollbar-thumb { @apply rounded-full bg-surface-hover; }
+}
+
+@layer components {
+  .content-wrapper { @apply mx-auto max-w-content px-6; padding-top: 56px; padding-bottom: 56px; }
+  .section-title { @apply font-semibold text-text; font-size: 24px; }
+  .section-hint { @apply font-mono text-xs text-muted; }
+  .display-title { @apply font-bold text-text; font-size: clamp(40px, 7vw, 48px); }
+  .page-title { @apply font-bold text-text; font-size: clamp(30px, 5vw, 32px); }
+  .heading-3 { @apply text-xl font-semibold text-text; }
+  .body-text { @apply text-muted; max-width: 75ch; }
+  .metadata { @apply font-mono uppercase tracking-wide text-muted; font-size: 12px; }
+  .primary-link { @apply inline-flex items-center rounded bg-accent px-4 py-2 font-semibold text-canvas; font-size: 14px; }
+  .secondary-link { @apply inline-flex items-center rounded border border-border px-4 py-2 text-sm text-muted; }
+  .project-primary-link { @apply inline-flex items-center gap-2 font-semibold text-accent hover:text-accent-secondary; font-size: 14px; }
+  .project-secondary-link { @apply relative z-10 text-sm text-muted hover:text-text; }
+  .project-cta { @apply items-center gap-2 rounded border border-accent px-4 py-2 font-semibold text-accent hover:bg-accent hover:text-canvas; font-size: 14px; }
+  .text-link { @apply text-accent underline decoration-border underline-offset-4 hover:decoration-accent; }
+  .back-link { @apply mb-6 inline-block text-sm text-muted hover:text-accent; }
+  .card { @apply rounded-lg border border-border bg-surface; }
+  .tag { @apply inline-block rounded-full border border-border px-2.5 py-0.5 text-xs text-muted; }
+  .btn-primary { @apply inline-block rounded bg-accent px-4 py-2 text-sm font-medium text-canvas hover:bg-accent-secondary; }
+  .grid-card { @apply relative flex h-full flex-col overflow-hidden; }
+  .grid-card-image { @apply aspect-[16/9] shrink-0 overflow-hidden border-b border-border bg-surface; }
+  .grid-card-image img { @apply block h-full w-full object-cover; }
+  .grid-card-body { @apply flex flex-1 flex-col p-5 sm:p-6; }
+  .stretched-link::after { content: ''; position: absolute; inset: 0; }
+  .skip-link { @apply sr-only; }
+  .skip-link:focus { @apply fixed left-3 top-3 z-50 rounded border border-border bg-canvas px-3 py-2 text-sm text-accent; }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .card, .featured-project, .compact-project { @apply transition-all duration-200; }
+  .card:hover, .card:focus-within, .featured-project:hover, .featured-project:focus-within,
+  .compact-project:hover, .compact-project:focus-within { @apply -translate-y-0.5 border-accent; }
+  .text-link, .back-link, .btn-primary, .primary-link, .secondary-link, .project-cta,
+  .project-primary-link, .project-secondary-link { @apply transition-colors duration-200; }
+}
+.card:focus-within { @apply border-accent; }
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .grid-card-image img { @apply transition-transform duration-200; }
+  .grid-card:hover .grid-card-image img,
+  .grid-card:focus-within .grid-card-image img { @apply scale-[1.02]; }
+}
+
+.prose {
+  --tw-prose-body: #cdd6f4; --tw-prose-headings: #cdd6f4; --tw-prose-links: #cba6f7;
+  --tw-prose-bold: #cdd6f4; --tw-prose-code: #b4befe; --tw-prose-quote-borders: #313244;
+  --tw-prose-bullets: #a6adc8; --tw-prose-hr: #313244; --tw-prose-th-borders: #313244;
+  --tw-prose-td-borders: #313244; --tw-prose-quotes: #cdd6f4; --tw-prose-counters: #a6adc8;
+  --tw-prose-captions: #a6adc8; --tw-prose-lead: #a6adc8;
+}
+.prose pre { @apply overflow-x-auto rounded-lg border border-border p-4 font-mono text-sm; }
+.prose code::before, .prose code::after { content: none; }
+
+@media (max-width: 639px) {
+  .content-wrapper { padding-top: 40px; padding-bottom: 40px; }
+  .section-hint { display: none; }
+}

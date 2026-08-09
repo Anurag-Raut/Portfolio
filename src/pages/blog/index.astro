@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogCard from '../../components/BlogCard.astro';
+import { getCollection } from 'astro:content';
+import { siteConfig } from '../../data/site';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<BaseLayout
+  title="Writing — Anurag Raut"
+  description="Thoughts on software engineering, systems programming, competitive programming, and project walkthroughs by Anurag Raut."
+>
+  <section class="content-wrapper">
+    <a href="/" class="back-link">&larr; Back home</a>
+    <h1 class="page-title mb-4">Writing</h1>
+    <p class="body-text mb-8">
+      Notes on software engineering, systems programming, and more.
+    </p>
+
+    {posts.length === 0 ? (
+      <div class="border-y border-border py-8">
+        <p class="heading-3 mb-2">No posts yet.</p>
+        <p class="body-text">Check back soon for content!</p>
+      </div>
+    ) : (
+      <div>
+        {posts.map((post) => (
+          <BlogCard
+            title={post.data.title}
+            description={post.data.description}
+            pubDate={post.data.pubDate}
+            slug={post.slug}
+             tags={post.data.tags}
+             readingTime={post.data.readingTime}
+          />
+        ))}
+      </div>
+    )}
+  </section>
+</BaseLayout>

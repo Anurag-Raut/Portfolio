@@ -1,0 +1,35 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  slug: string;
+  tags: string[];
+  readingTime: string;
+}
+
+const { title, description, pubDate, slug, tags, readingTime } = Astro.props;
+
+const formattedDate = new Intl.DateTimeFormat('en', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+}).format(pubDate);
+---
+
+<article class="border-b border-border py-6 first:border-t">
+  <a href={`/blog/${slug}/`} class="block hover:text-accent">
+    <div class="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between">
+      <h2 class="heading-3">{title}</h2>
+      <p class="metadata">{formattedDate} · {readingTime}</p>
+    </div>
+  <p class="body-text mt-2 mb-3">{description}</p>
+  {tags.length > 0 && (
+    <div class="flex flex-wrap gap-2">
+      {tags.map((tag) => (
+        <span class="metadata">#{tag}</span>
+      ))}
+    </div>
+  )}
+  </a>
+</article>

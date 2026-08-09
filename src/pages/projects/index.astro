@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects', ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+const formatDate = (date: Date) =>
+  new Intl.DateTimeFormat('en', { month: 'short', year: 'numeric' }).format(date);
+---
+
+<BaseLayout
+  title="Projects — Anurag Raut"
+  description="A complete index of Anurag Raut's software engineering projects."
+>
+  <section class="content-wrapper max-w-content">
+    <a href="/" class="back-link">&larr; Home</a>
+    <h1 class="page-title mb-4">Projects</h1>
+    <p class="body-text mb-8">A selection of software, systems, and product work.</p>
+
+    {projects.length === 0 ? (
+      <div class="border-y border-border py-8">
+        <p class="body-text">No projects are available yet.</p>
+      </div>
+    ) : (
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+        {projects.map((project) => (
+          <article class="grid-card card">
+            {project.data.image && (
+              <div class="grid-card-image">
+                <img
+                  src={project.data.image}
+                  alt={project.data.imageAlt}
+                  width="1024"
+                  height="1024"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            )}
+            <div class="grid-card-body">
+              <div class="flex flex-wrap items-baseline justify-between gap-2">
+                <h2 class="heading-3">{project.data.title}</h2>
+                <span class="metadata">{formatDate(project.data.date)}</span>
+              </div>
+              <p class="body-text mt-3">{project.data.summary}</p>
+              <div class="mt-4 flex flex-wrap gap-2" aria-label={`${project.data.title} technologies`}>
+                {project.data.tech.map((tech) => <span class="tag">{tech}</span>)}
+              </div>
+              <div class="mt-auto flex flex-wrap items-center gap-x-4 gap-y-2 pt-6">
+                <a href={`/projects/${project.slug}/`} class="project-primary-link stretched-link">
+                  Read write-up <span aria-hidden="true">&rarr;</span>
+                </a>
+                <a
+                  href={project.data.repository}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="project-secondary-link"
+                >
+                  {project.data.repositoryLabel}
+                </a>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    )}
+  </section>
+</BaseLayout>

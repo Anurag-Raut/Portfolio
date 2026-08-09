@@ -1,0 +1,13 @@
+---
+interface Props {
+  title: string;
+  hint?: string;
+}
+
+const { title, hint } = Astro.props;
+---
+
+<div class="mb-8 flex items-baseline justify-between gap-4">
+  <h2 class="section-title mb-0">{title}</h2>
+  {hint && <span class="section-hint">/ {hint}</span>}
+</div>

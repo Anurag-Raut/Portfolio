@@ -1,0 +1,30 @@
+---
+title: 'Building ANDB: a SQL database from scratch in C++'
+description: 'What I learned writing a lexer, parser, tree-walk interpreter, B+ tree indexes, and ACID transactions by hand.'
+pubDate: 2024-08-12
+readingTime: '8 min read'
+tags: ['C++', 'Databases', 'Systems']
+draft: false
+---
+
+ANDB started as a question: what actually happens between typing a SQL query and getting rows back? Instead of reading about it, I decided to build the whole path myself — from raw text to committed transactions.
+
+## From text to an AST
+
+The front end is a hand-written lexer and recursive-descent parser. The lexer turns characters into tokens, and the parser turns tokens into an abstract syntax tree. Keeping the grammar small early on made it easy to extend later.
+
+```sql
+SELECT name, age FROM users WHERE age > 21 ORDER BY age;
+```
+
+## Tree-walk execution
+
+A tree-walk interpreter evaluates the AST directly. It is not the fastest strategy, but it is the clearest — each node knows how to execute itself, which made debugging query plans straightforward.
+
+## Indexing with B+ trees
+
+Sequential scans are fine until they are not. I implemented B+ trees so lookups and range queries stay logarithmic, and so that ordered iteration comes for free from the leaf-node linked list.
+
+## ACID transactions
+
+The hardest part was correctness under failure. I added write-ahead logging and careful commit ordering so that a crash mid-transaction never leaves the database in a half-written state.

@@ -1,0 +1,51 @@
+backend:
+  name: github
+  repo: Anurag-Raut/portfolio
+  branch: main
+  base_url: https://decap-oauth.anuragraut.workers.dev
+  auth_endpoint: /auth
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+collections:
+  - name: "blog"
+    label: "Blog Posts"
+    folder: "src/content/blog"
+    create: true
+    delete: true
+    extension: "mdx"
+    format: "frontmatter"
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Publish Date", name: "pubDate", widget: "datetime" }
+      - { label: "Updated Date", name: "updatedDate", widget: "datetime", required: false }
+      - { label: "Reading Time", name: "readingTime", widget: "string" }
+      - { label: "Tags", name: "tags", widget: "list", required: false }
+      - { label: "Draft", name: "draft", widget: "boolean", default: false }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "projects"
+    label: "Project Write-ups"
+    folder: "src/content/projects"
+    create: true
+    delete: true
+    extension: "mdx"
+    format: "frontmatter"
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Summary", name: "summary", widget: "text" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Technologies", name: "tech", widget: "list" }
+      - { label: "Repository URL", name: "repository", widget: "string", pattern: ["^https?://.+", "Must start with http:// or https://"] }
+      - { label: "Link Label", name: "repositoryLabel", widget: "select", options: ["Repository", "GitHub profile"], default: "Repository" }
+      - { label: "Order", name: "order", widget: "number", value_type: "int" }
+      - { label: "Draft", name: "draft", widget: "boolean", default: false }
+      - { label: "Featured", name: "featured", widget: "boolean", default: false }
+      - { label: "Show on Home", name: "showOnHome", widget: "boolean", default: true }
+      - { label: "Image", name: "image", widget: "string", required: false, hint: "Site-relative path; required with Image Alt for home-page visual cards" }
+      - { label: "Image Alt", name: "imageAlt", widget: "string", required: false, hint: "Meaningful alternative text required when Image is set" }
+      - { label: "Body", name: "body", widget: "markdown" }

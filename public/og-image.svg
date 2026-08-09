@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#1e1e2e" />
+  <circle cx="200" cy="150" r="200" fill="#cba6f7" opacity="0.08" />
+  <circle cx="1000" cy="500" r="200" fill="#89b4fa" opacity="0.08" />
+  <text x="600" y="280" font-size="64" font-weight="bold" text-anchor="middle" fill="#cdd6f4" font-family="sans-serif">Anurag Raut</text>
+  <text x="600" y="360" font-size="32" text-anchor="middle" fill="#cba6f7" font-family="sans-serif">Software Engineer</text>
+  <text x="600" y="430" font-size="24" text-anchor="middle" fill="#a6adc8" font-family="sans-serif">Full-Stack · Systems Programming · Competitive Programming</text>
+</svg>

@@ -1,0 +1,28 @@
+---
+title: 'Implementing SMTP straight from the RFCs'
+description: 'Reading RFC 5321, 3207, and 4954 and turning them into a working mail server and client in Go.'
+pubDate: 2025-02-02
+readingTime: '7 min read'
+tags: ['Go', 'Protocols', 'Networking']
+draft: false
+---
+
+Email feels ancient, and that is exactly why it is a great learning target: the specifications are precise, stable, and freely available. I built an SMTP server and client in Go by reading the RFCs directly.
+
+## The command loop
+
+SMTP is a line-based, request/response protocol. The core of the server is a loop that parses commands like HELO, MAIL FROM, RCPT TO, and DATA, and replies with numeric status codes.
+
+```text
+C: EHLO client.example
+S: 250-mail.example greets client.example
+S: 250 STARTTLS
+```
+
+## Upgrading with STARTTLS
+
+RFC 3207 defines STARTTLS, which upgrades a plaintext connection to TLS in place. In Go this maps cleanly onto wrapping the existing connection with crypto/tls once the client asks for it.
+
+## Authentication
+
+RFC 4954 adds the AUTH command. I implemented basic mechanisms so the server only relays mail for authenticated senders — a small change that makes the difference between a demo and something you would not be embarrassed to run.

@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: post,
+  }));
+}
+
+type Props = CollectionEntry<'blog'>;
+
+const post = Astro.props;
+const { Content } = await post.render();
+
+const title = post.data.title;
+const description = post.data.description;
+const pubDate = post.data.pubDate.toISOString();
+const updatedDate = post.data.updatedDate?.toISOString();
+
+const formattedDate = new Intl.DateTimeFormat('en', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+}).format(post.data.pubDate);
+
+const formattedUpdated = post.data.updatedDate
+  ? new Intl.DateTimeFormat('en', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    }).format(post.data.updatedDate)
+  : null;
+---
+
+<BaseLayout
+  title={`${title} — Anurag Raut`}
+  description={description}
+  type="article"
+  publishedDate={pubDate}
+  modifiedDate={updatedDate}
+>
+  <article class="content-wrapper max-w-content">
+    <a href="/blog/" class="back-link">
+      &larr; All writing
+    </a>
+    <div class="metadata mb-4 flex flex-wrap items-center gap-x-4 gap-y-2">
+      <span>{formattedDate}</span>
+      <span>· {post.data.readingTime}</span>
+      {formattedUpdated && (
+        <span>(Updated: {formattedUpdated})</span>
+      )}
+    </div>
+    <h1 class="page-title mb-4">{title}</h1>
+    <p class="body-text mb-5">{description}</p>
+    {post.data.tags.length > 0 && (
+      <div class="mb-8 flex flex-wrap gap-2">
+        {post.data.tags.map((tag) => (
+          <span class="tag">{tag}</span>
+        ))}
+      </div>
+    )}
+    <div class="mb-10 border-t border-border" aria-hidden="true"></div>
+
+    <div class="prose mx-auto max-w-[672px] text-base">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>

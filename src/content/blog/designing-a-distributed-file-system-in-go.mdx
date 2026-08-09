@@ -1,0 +1,22 @@
+---
+title: 'Designing a distributed file system in Go over raw TCP'
+description: 'A master server for coordination, peer discovery, and direct peer-to-peer transfers — built without a framework.'
+pubDate: 2024-06-20
+readingTime: '6 min read'
+tags: ['Go', 'Distributed Systems', 'Networking']
+draft: false
+---
+
+Interfiles is a distributed file system written in Go on top of raw TCP. I wanted to understand coordination and data movement without leaning on a higher-level library.
+
+## Coordinator, not bottleneck
+
+A master server handles coordination and peer discovery but deliberately stays out of the data path. Peers register with it, then transfer file chunks directly to each other so the coordinator never becomes a throughput bottleneck.
+
+## Framing over TCP
+
+TCP is a byte stream, not a message stream, so the first real problem is framing. I used a small length-prefixed protocol so both sides always know where one message ends and the next begins.
+
+- Length-prefixed frames for every control and data message.
+- Heartbeats so the master can drop dead peers.
+- Direct peer-to-peer streams for the actual file bytes.

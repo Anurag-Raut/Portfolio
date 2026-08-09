@@ -1,0 +1,47 @@
+---
+import { getCollection } from 'astro:content';
+
+const allHome = (await getCollection('projects', ({ data }) => !data.draft && data.showOnHome))
+  .sort((a, b) => a.data.order - b.data.order);
+const featured = allHome.slice(0, 3);
+---
+
+<section id="projects" class="content-wrapper border-t border-border">
+  <div class="mb-8">
+    <h2 class="section-title">Selected projects</h2>
+  </div>
+  <div class="space-y-6">
+    {featured.map((project) => (
+      <article class="card compact-project relative overflow-hidden">
+        {project.data.image && (
+          <div class="project-image aspect-[16/7] overflow-hidden border-b border-border bg-canvas">
+            <img src={project.data.image} alt={project.data.imageAlt} width="1024" height="1024" loading="lazy" decoding="async" class="h-full w-full object-cover" />
+          </div>
+        )}
+        <div class="p-5 sm:p-6">
+          <div class="flex flex-wrap items-baseline justify-between gap-2">
+            <h3 class="heading-3">{project.data.title}</h3>
+            <span class="metadata">{project.data.date.getFullYear()}</span>
+          </div>
+          <p class="body-text mt-3">{project.data.summary}</p>
+          <div class="mt-4 flex flex-wrap gap-2" aria-label={`${project.data.title} technologies`}>
+            {project.data.tech.map((tech) => <span class="tag">{tech}</span>)}
+          </div>
+          <div class="mt-5 flex flex-wrap gap-3">
+            <a href={`/projects/${project.slug}/`} class="project-primary-link stretched-link">Read write-up <span aria-hidden="true">&rarr;</span></a>
+            <a href={project.data.repository} target="_blank" rel="noopener noreferrer" class="project-secondary-link">{project.data.repositoryLabel}</a>
+          </div>
+        </div>
+      </article>
+    ))}
+  </div>
+
+  <a href="/projects/" class="project-cta mt-8 inline-flex">View all projects <span aria-hidden="true">&rarr;</span></a>
+</section>
+
+<style>
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .project-image img { transition: transform 500ms ease; }
+    .card:hover .project-image img, .card:focus-within .project-image img { transform: scale(1.03); }
+  }
+</style>

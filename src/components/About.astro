@@ -1,0 +1,16 @@
+---
+import { siteConfig, achievements } from '../data/site';
+import SectionHeading from './SectionHeading.astro';
+---
+
+<section id="about" class="content-wrapper border-t border-border">
+  <SectionHeading title="About" hint="a little more" />
+  <div class="body-text space-y-4">
+    <p>I'm a software engineer based in {siteConfig.location} working on full-stack products with React, React Native, and Node.js, including AI-integrated features and performance work.</p>
+    <p>I also enjoy systems programming — I've built a relational database from scratch in C++, a distributed file system in Go, and an SMTP server implementing core RFC specs.</p>
+  </div>
+  <div class="mt-8">
+    <h3 class="heading-3 mb-4">Highlights</h3>
+    <ul class="space-y-2 text-muted">{achievements.map((achievement) => <li class="flex gap-2"><span class="text-accent" aria-hidden="true">✦</span><span>{achievement}</span></li>)}</ul>
+  </div>
+</section>

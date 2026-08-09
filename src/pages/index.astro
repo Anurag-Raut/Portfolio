@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Projects from '../components/Projects.astro';
+import Experience from '../components/Experience.astro';
+import About from '../components/About.astro';
+import WritingPreview from '../components/WritingPreview.astro';
+import { siteConfig } from '../data/site';
+---
+
+<BaseLayout
+  title={siteConfig.title}
+  description={siteConfig.description}
+>
+  <Hero />
+  <Projects />
+  <Experience />
+  <About />
+  <WritingPreview />
+</BaseLayout>

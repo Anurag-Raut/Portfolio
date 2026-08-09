@@ -1,0 +1,35 @@
+---
+import { siteConfig, socialLinks } from '../data/site';
+
+const github = socialLinks.find((link) => link.name === 'GitHub');
+const linkedin = socialLinks.find((link) => link.name === 'LinkedIn');
+---
+
+<section class="content-wrapper pt-16 sm:pb-14">
+  <div class="border-l-2 border-accent pl-5 sm:pl-6">
+    <h1 class="display-title tracking-tight">{siteConfig.name}</h1>
+    <p class="mt-3 font-mono text-base text-accent-secondary">Software Engineer</p>
+  </div>
+  <p class="body-text mt-6">
+    Full-stack development with React, React Native, and Node.js, plus systems programming in
+    C++ and Go. Based in {siteConfig.location} &mdash; open to remote opportunities.
+  </p>
+  <div class="mt-8 flex flex-wrap items-center gap-3">
+    <a href="/#projects" class="primary-link">
+      Projects
+    </a>
+    {github && (
+      <a href={github.url} target="_blank" rel="noopener noreferrer" class="secondary-link">
+        GitHub
+      </a>
+    )}
+    {linkedin && (
+      <a href={linkedin.url} target="_blank" rel="noopener noreferrer" class="secondary-link">
+        LinkedIn
+      </a>
+    )}
+    <a href={`mailto:${siteConfig.email}`} class="secondary-link">
+      Email
+    </a>
+  </div>
+</section>

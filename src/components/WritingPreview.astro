@@ -1,0 +1,11 @@
+---
+import { getCollection } from 'astro:content';
+import SectionHeading from './SectionHeading.astro';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()).slice(0, 3);
+---
+
+<section class="content-wrapper border-t border-border">
+  <div class="flex items-baseline justify-between gap-4"><SectionHeading title="Writing" hint="notes & ideas" /><a href="/blog/" class="text-link text-sm">All posts →</a></div>
+  {posts.length ? <div class="divide-y divide-border">{posts.map((post) => <a href={`/blog/${post.slug}/`} class="block py-5 first:pt-0 hover:text-accent"><div class="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between"><h3 class="font-medium text-text">{post.data.title}</h3><span class="metadata">{post.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</span></div><p class="body-text mt-1 text-sm">{post.data.description}</p></a>)}</div> : <p class="body-text">New writing is on the way.</p>}
+</section>

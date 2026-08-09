@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects', ({ data }) => !data.draft);
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: project,
+  }));
+}
+
+type Props = CollectionEntry<'projects'>;
+
+const project = Astro.props;
+const { Content } = await project.render();
+
+const formattedDate = new Intl.DateTimeFormat('en', {
+  month: 'short',
+  year: 'numeric',
+}).format(project.data.date);
+---
+
+<BaseLayout
+  title={`${project.data.title} — Anurag Raut`}
+  description={project.data.summary}
+  type="article"
+  publishedDate={project.data.date.toISOString()}
+>
+  <article class="content-wrapper max-w-content">
+    <a href="/#projects" class="back-link">
+      &larr; Back to projects
+    </a>
+    <h1 class="display-title mb-4">{project.data.title}</h1>
+    <p class="body-text mb-4">{project.data.summary}</p>
+    <div class="metadata mb-6 flex flex-wrap items-center gap-x-4 gap-y-2">
+      <span>{formattedDate}</span>
+      <span class="flex flex-wrap gap-2">
+        {project.data.tech.map((tech) => (
+          <span class="tag">{tech}</span>
+        ))}
+      </span>
+    </div>
+    <a href={project.data.repository} target="_blank" rel="noopener noreferrer" class="secondary-link mb-10 inline-block">
+      {project.data.repositoryLabel}
+    </a>
+    <div class="prose mx-auto max-w-[672px]">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>

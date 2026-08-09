@@ -1,0 +1,41 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  type?: 'website' | 'article';
+  publishedDate?: string;
+  modifiedDate?: string;
+  noindex?: boolean;
+}
+
+const { title, description, image, type, publishedDate, modifiedDate, noindex } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead
+      title={title}
+      description={description}
+      image={image}
+      type={type}
+      publishedDate={publishedDate}
+      modifiedDate={modifiedDate}
+      noindex={noindex}
+    />
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+    <Header />
+    <main id="main" class="min-w-0">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

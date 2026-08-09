@@ -1,0 +1,20 @@
+---
+import { experience } from '../data/site';
+import SectionHeading from './SectionHeading.astro';
+---
+
+<section id="experience" class="content-wrapper border-t border-border">
+  <SectionHeading title="Experience" hint="background" />
+  <div class="border-l-2 border-border pl-5 sm:pl-6">
+    {experience.map((job) => (
+      <div class="pb-8">
+        <div class="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between">
+          <h3 class="heading-3">{job.role}{job.company && <span class="text-muted"> · {job.company}</span>}</h3>
+          <p class="metadata">{job.period}</p>
+        </div>
+        <p class="metadata mt-2">{job.location}</p>
+        <ul class="mt-4 list-disc space-y-2 pl-5 text-muted">{job.points.map((point) => <li>{point}</li>)}</ul>
+      </div>
+    ))}
+  </div>
+</section>
