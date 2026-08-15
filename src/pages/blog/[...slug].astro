@@ -69,3 +69,77 @@ const formattedUpdated = post.data.updatedDate
     </div>
   </article>
 </BaseLayout>
+
+<script is:inline>
+  (async () => {
+    const blocks = Array.from(document.querySelectorAll('pre[data-language="mermaid"], pre > code.language-mermaid'));
+    if (!blocks.length) return;
+
+    const sources = blocks.map((block) => block.textContent.trim());
+    const targets = blocks.map((block) => {
+      const pre = block.tagName === 'PRE' ? block : block.parentElement;
+      const div = document.createElement('div');
+      div.className = 'mermaid';
+      div.setAttribute('aria-label', 'Diagram');
+      pre.parentElement.replaceChild(div, pre);
+      return div;
+    });
+
+    try {
+      const { default: mermaid } = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+      mermaid.initialize({
+        startOnLoad: false,
+        securityLevel: 'strict',
+        theme: 'base',
+        fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+        themeVariables: {
+          background: '#1e1e2e',
+          primaryColor: '#313244',
+          primaryTextColor: '#cdd6f4',
+          primaryBorderColor: '#89b4fa',
+          secondaryColor: '#45475a',
+          secondaryTextColor: '#cdd6f4',
+          tertiaryColor: '#181825',
+          lineColor: '#a6adc8',
+          textColor: '#cdd6f4',
+          mainBkg: '#313244',
+          nodeBorder: '#89b4fa',
+          clusterBkg: '#181825',
+          clusterBorder: '#45475a',
+          edgeLabelBackground: '#1e1e2e',
+          edgeLabelColor: '#cdd6f4',
+          labelBackground: '#313244',
+          labelColor: '#cdd6f4',
+          noteBkgColor: '#45475a',
+          noteTextColor: '#cdd6f4',
+          noteBorderColor: '#89b4fa',
+          actorBkg: '#313244',
+          actorBorder: '#89b4fa',
+          actorTextColor: '#cdd6f4',
+          actorLineColor: '#a6adc8',
+          activationBkgColor: '#45475a',
+          signalColor: '#cdd6f4',
+          signalTextColor: '#cdd6f4',
+          stateBkg: '#313244',
+          stateBorder: '#89b4fa',
+          stateLabelColor: '#cdd6f4',
+          arrowheadColor: '#cdd6f4',
+          commitLabelColor: '#cdd6f4',
+        },
+      });
+      targets.forEach((target, i) => {
+        target.textContent = sources[i];
+      });
+      await mermaid.run({ nodes: targets });
+    } catch (error) {
+      console.error('Failed to render mermaid diagram:', error);
+      targets.forEach((target, i) => {
+        const pre = document.createElement('pre');
+        const code = document.createElement('code');
+        code.textContent = sources[i];
+        pre.appendChild(code);
+        target.replaceWith(pre);
+      });
+    }
+  })();
+</script>

@@ -72,6 +72,8 @@
 }
 .prose pre { @apply overflow-x-auto rounded-lg border border-border p-4 font-mono text-sm; }
 .prose code::before, .prose code::after { content: none; }
+.prose .mermaid { @apply my-6 overflow-x-auto rounded-lg border border-border bg-canvas p-4 text-center; }
+.prose .mermaid svg { max-width: 100%; height: auto; margin: 0 auto; }
 
 @media (max-width: 639px) {
   .content-wrapper { padding-top: 40px; padding-bottom: 40px; }
