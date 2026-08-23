@@ -118,7 +118,7 @@ One thing I wanted to understand was what happens between typing a SQL query and
 The architecture became fairly clear:
 
 ```mermaid
-flowchart LR
+flowchart TD
     CLI["CLI"] --> Socket["Unix domain socket"]
     Socket --> Daemon["Daemon"]
     Daemon --> Parser["Tokenizer and SQL parser"]
@@ -182,14 +182,13 @@ Instead, ANDB separates logical deletion from physical deletion.
 When a transaction deletes a row, the row stays in place. The deleting transaction ID is stored in `t_del`, and the index entry also remains. Readers then decide whether the row should be visible based on the state of that transaction.
 
 ```mermaid
-stateDiagram-v2
-    [*] --> Present
-    Present --> DeletePending: DELETE sets t_del
-    DeletePending --> Hidden: COMMIT
-    DeletePending --> Present: ROLLBACK
-    Present --> InsertPending: INSERT sets t_ins
-    InsertPending --> Present: COMMIT
-    InsertPending --> NotVisible: ROLLBACK
+flowchart TD
+    Existing["Row exists physically"] --> DeletePending["DELETE sets t_del"]
+    DeletePending --> Hidden["COMMIT: row becomes hidden"]
+    DeletePending --> VisibleAgain["ROLLBACK: row remains visible"]
+    NewRow["New row is written physically"] --> InsertPending["INSERT sets t_ins"]
+    InsertPending --> Visible["COMMIT: row becomes visible"]
+    InsertPending --> NotVisible["ROLLBACK: row is not visible"]
 ```
 
 The same idea works for inserts.
