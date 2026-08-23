@@ -11,7 +11,7 @@ const formatDate = (date: Date) =>
 ---
 
 <BaseLayout
-  title="Projects — Anurag Raut"
+  title="Projects | Anurag Raut"
   description="A complete index of Anurag Raut's software engineering projects."
 >
   <section class="content-wrapper max-w-content">
@@ -49,9 +49,13 @@ const formatDate = (date: Date) =>
                 {project.data.tech.map((tech) => <span class="tag">{tech}</span>)}
               </div>
               <div class="mt-auto flex flex-wrap items-center gap-x-4 gap-y-2 pt-6">
-                <a href={`/projects/${project.slug}/`} class="project-primary-link stretched-link">
-                  Read write-up <span aria-hidden="true">&rarr;</span>
-                </a>
+                {project.data.writeupSlug ? (
+                  <a href={`/blog/${project.data.writeupSlug}/`} class="project-primary-link stretched-link">
+                    Read write-up <span aria-hidden="true">&rarr;</span>
+                  </a>
+                ) : (
+                  <span class="text-sm text-muted">Write-up coming soon</span>
+                )}
                 <a
                   href={project.data.repository}
                   target="_blank"

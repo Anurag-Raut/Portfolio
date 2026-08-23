@@ -20,6 +20,7 @@ const projectSchema = z.object({
   tech: z.array(z.string()),
   repository: z.string().url(),
   repositoryLabel: z.enum(['Repository', 'GitHub profile']).default('Repository'),
+  writeupSlug: z.string().optional(),
   order: z.number().int(),
   draft: z.boolean().default(false),
   featured: z.boolean().default(false),

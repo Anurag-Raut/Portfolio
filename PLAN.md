@@ -20,7 +20,7 @@ Adapt the verified reference design natively to Astro: a compact Catppuccin Moch
 - [ ] `npm run build` completes successfully and emits all six project routes.
 
 ## Steps
-### Step 1 — Establish project content as the source of truth
+### Step 1: Establish project content as the source of truth
 **Files to create:** `src/content/projects/andb.mdx`, `src/content/projects/interfiles.mdx`, `src/content/projects/smtp-server-client.mdx`, `src/content/projects/streamvault.mdx`, `src/content/projects/gojs.mdx`, `src/content/projects/react-native-time-picker.mdx`
 **Files to modify:** `src/content/config.ts` (add the validated `projects` collection), `src/data/site.ts` (remove duplicated project records and tighten recruiter-facing copy), `public/admin/config.yml` (add project write-up editing)
 **Action:**
@@ -30,7 +30,7 @@ Adapt the verified reference design natively to Astro: a compact Catppuccin Moch
 4. Remove the `projects` export from `src/data/site.ts` after its metadata has been migrated. Shorten `siteConfig.description`, the experience bullets, and the achievements copy to factual, scannable statements; preserve contact details, social URLs, education, skills, and all substantiated accomplishments.
 5. Add a `projects` collection to `public/admin/config.yml` pointing to `src/content/projects`, using the same GitHub backend and MDX/frontmatter conventions as `blog`. Add widgets for every schema field, use a number widget for `order`, a list widget for `tech`, a boolean widget for `draft`, and a Markdown body widget.
 
-### Step 2 — Build project cards and dedicated write-ups
+### Step 2: Build project cards and dedicated write-ups
 **Files to create:** `src/pages/projects/[...slug].astro`
 **Files to modify:** `src/components/Projects.astro` (render the project collection as concise recruiter-facing cards)
 **Action:**
@@ -40,7 +40,7 @@ Adapt the verified reference design natively to Astro: a compact Catppuccin Moch
 4. Implement `src/pages/projects/[...slug].astro` with `getStaticPaths()` over non-draft `projects` entries, `CollectionEntry<'projects'>` typing, and `post.render()` following the established blog route pattern.
 5. Render a concise project masthead containing the title, summary, date, technology labels, repository link, and `← Back to projects` link to `/#projects`, followed by the MDX content in a narrow readable prose column. Pass unique title/description and article dates to `BaseLayout`, and retain trailing slashes in every internal URL.
 
-### Step 3 — Reorder and compress the recruiter journey
+### Step 3: Reorder and compress the recruiter journey
 **Files to create:** None
 **Files to modify:** `src/pages/index.astro` (put projects directly after the hero and remove recent-blog empty state), `src/components/Hero.astro` (replace long intro with a compact recruiter summary and actions), `src/components/Header.astro` (replace sidebar/menu/scroll-spy with a simple top nav), `src/components/Experience.astro` (reduce job content to high-signal results), `src/components/About.astro` (condense biography, skills, education, and selected achievements), `src/components/Contact.astro` (reduce to one invitation and direct contact links), `src/components/Footer.astro` (remove sidebar offset and duplicate low-value social links), `src/layouts/BaseLayout.astro` (use the centered top-nav layout and remove reveal behavior)
 **Files to delete:** `src/components/ScrollReveal.astro`, `src/components/RecentBlogs.astro`, `src/components/Achievements.astro`
@@ -53,7 +53,7 @@ Adapt the verified reference design natively to Astro: a compact Catppuccin Moch
 6. In `BaseLayout.astro`, remove the `ScrollReveal` import/render and all left-sidebar/top-padding offsets. Keep `BaseHead`, `Header`, `Footer`, and the global stylesheet, with a normal document flow and skip-link-friendly main-content target.
 7. Delete the three now-unused components only after all imports and references have been removed.
 
-### Step 4 — Apply one minimal, readable Catppuccin Mocha visual system everywhere
+### Step 4: Apply one minimal, readable Catppuccin Mocha visual system everywhere
 **Files to create:** None
 **Files to modify:** `tailwind.config.mjs` (define semantic Catppuccin Mocha canvas, text, surface, border, and mauve/lavender accent tokens), `src/styles/global.css` (define compact layout, typography, focus, links, buttons, tags, elevated cards, and Mocha prose), `src/components/BlogCard.astro` (simplify article summary presentation), `src/pages/blog/index.astro` (use compact listing/empty state), `src/pages/blog/[...slug].astro` (align article layout and readable Mocha prose), `src/pages/404.astro` (remove reveal dependency and align spacing)
 **Action:**

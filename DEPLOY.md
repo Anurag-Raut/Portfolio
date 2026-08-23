@@ -26,9 +26,9 @@ This repo includes a GitHub Actions workflow at `.github/workflows/deploy.yml`.
 3. Copy the token and your Account ID (found on the right sidebar of any Pages project or the dashboard).
 4. In your GitHub repo, go to **Settings** → **Secrets and Variables** → **Actions**.
 5. Add these repository secrets:
-   - `CLOUDFLARE_API_TOKEN` — the token from step 2
-   - `CLOUDFLARE_ACCOUNT_ID` — your Cloudflare account ID
-6. Push to `main`/`master` — the workflow will build and deploy automatically.
+   - `CLOUDFLARE_API_TOKEN`: the token from step 2
+   - `CLOUDFLARE_ACCOUNT_ID`: your Cloudflare account ID
+6. Push to `main`/`master`. The workflow will build and deploy automatically.
 
 ## Option 3: Deploy via Wrangler CLI (Manual)
 

@@ -1,6 +1,6 @@
 export const siteConfig = {
   name: 'Anurag Raut',
-  title: 'Anurag Raut — Software Engineer',
+  title: 'Anurag Raut | Software Engineer',
   description:
     'Software engineer in Mumbai building full-stack products with React, React Native, and Node.js, plus low-level systems in C++ and Go.',
   url: 'https://anuragraut.dev',

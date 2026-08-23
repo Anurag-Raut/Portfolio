@@ -1,13 +1,13 @@
 # Blog Admin Portal Setup (Decap CMS)
 
-Your blog has an admin portal at `/admin` powered by Decap CMS. This lets you write and publish blog posts from a web UI — no code editing required. Posts are committed to your GitHub repo and Cloudflare Pages auto-deploys them.
+Your blog has an admin portal at `/admin` powered by Decap CMS. This lets you write and publish blog posts from a web UI. No code editing is required. Posts are committed to your GitHub repo and Cloudflare Pages auto-deploys them.
 
 ## How It Works
 
 1. You visit `https://yoursite.com/admin/`
 2. You authenticate with your GitHub account (OAuth)
 3. You write a post in the rich text editor
-4. You click "Publish" — Decap CMS commits the post to your repo
+4. You click "Publish". Decap CMS commits the post to your repo
 5. Cloudflare Pages detects the commit and rebuilds + deploys your site
 6. The post is live within ~1-2 minutes
 
@@ -19,7 +19,7 @@ Your blog has an admin portal at `/admin` powered by Decap CMS. This lets you wr
 
 1. Go to GitHub → Settings → Developer settings → OAuth Apps → New OAuth App
 2. Fill in:
-   - **Application name:** Blog Admin — Anurag Raut
+   - **Application name:** Blog Admin | Anurag Raut
    - **Homepage URL:** `https://anuragraut.dev` (your domain)
    - **Authorization callback URL:** `https://decap-oauth.anuragraut.workers.dev/callback`
 3. Click "Register application"
@@ -57,7 +57,7 @@ Visit `https://yoursite.com/admin/` and sign in with GitHub.
 2. Click "Blog Posts" → "New Blog Post"
 3. Fill in the title, description, publish date, tags
 4. Write your content in the markdown editor
-5. Click "Publish" — the post is committed to your repo and deployed automatically
+5. Click "Publish". The post is committed to your repo and deployed automatically
 
 ## Security
 
