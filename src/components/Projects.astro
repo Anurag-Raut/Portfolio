@@ -30,10 +30,15 @@ const featured = allHome.slice(0, 3);
           <div class="mt-5 flex flex-wrap gap-3">
             {project.data.writeupSlug ? (
               <a href={`/blog/${project.data.writeupSlug}/`} class="project-primary-link stretched-link">Read write-up <span aria-hidden="true">&rarr;</span></a>
-            ) : (
-              <span class="text-sm text-muted">Write-up coming soon</span>
-            )}
-            <a href={project.data.repository} target="_blank" rel="noopener noreferrer" class="project-secondary-link">{project.data.repositoryLabel}</a>
+            ) : null}
+            <a
+              href={project.data.repository}
+              target="_blank"
+              rel="noopener noreferrer"
+              class:list={['project-secondary-link', !project.data.writeupSlug && 'stretched-link']}
+            >
+              {project.data.repositoryLabel}
+            </a>
           </div>
         </div>
       </article>

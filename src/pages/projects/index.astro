@@ -53,14 +53,12 @@ const formatDate = (date: Date) =>
                   <a href={`/blog/${project.data.writeupSlug}/`} class="project-primary-link stretched-link">
                     Read write-up <span aria-hidden="true">&rarr;</span>
                   </a>
-                ) : (
-                  <span class="text-sm text-muted">Write-up coming soon</span>
-                )}
+                ) : null}
                 <a
                   href={project.data.repository}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="project-secondary-link"
+                  class:list={['project-secondary-link', !project.data.writeupSlug && 'stretched-link']}
                 >
                   {project.data.repositoryLabel}
                 </a>
