@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+  <title id="title">Better Redis architecture</title>
+  <desc id="desc">A diagram showing keys routed to shards, then to a hash ring with segments and buckets.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#171b2b"/>
+      <stop offset="1" stop-color="#0f1220"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" x2="1">
+      <stop offset="0" stop-color="#d6b7ff"/>
+      <stop offset="1" stop-color="#7da6ff"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0 0L8 4L0 8Z" fill="#9baeff"/>
+    </marker>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+  <g opacity="0.2" stroke="#a6b0d5" stroke-width="1">
+    <path d="M64 128H960M64 256H960M64 384H960M64 512H960M64 640H960M64 768H960M64 896H960"/>
+    <path d="M128 64V960M256 64V960M384 64V960M512 64V960M640 64V960M768 64V960M896 64V960"/>
+  </g>
+  <g fill="#f1efff" font-family="Inter,Arial,sans-serif">
+    <text x="72" y="94" font-size="28" font-weight="700">BETTER REDIS</text>
+    <text x="72" y="126" font-size="15" fill="#aeb5d2" letter-spacing="2">SHARDED STORAGE ENGINE</text>
+  </g>
+  <g font-family="Inter,Arial,sans-serif" text-anchor="middle">
+    <rect x="72" y="184" width="190" height="82" rx="16" fill="#242a44" stroke="#d6b7ff" stroke-width="2"/>
+    <text x="167" y="220" fill="#f1efff" font-size="20" font-weight="700">PUT / GET</text>
+    <text x="167" y="246" fill="#aeb5d2" font-size="14">key + value</text>
+    <path d="M262 225H332" stroke="url(#accent)" stroke-width="3" marker-end="url(#arrow)"/>
+    <rect x="332" y="184" width="190" height="82" rx="16" fill="#242a44" stroke="#9baeff" stroke-width="2"/>
+    <text x="427" y="220" fill="#f1efff" font-size="20" font-weight="700">HASH KEY</text>
+    <text x="427" y="246" fill="#aeb5d2" font-size="14">route to shard</text>
+    <path d="M522 225H592" stroke="url(#accent)" stroke-width="3"/>
+    <rect x="592" y="184" width="190" height="82" rx="16" fill="#242a44" stroke="#7da6ff" stroke-width="2"/>
+    <text x="687" y="220" fill="#f1efff" font-size="20" font-weight="700">SHARD 02</text>
+    <text x="687" y="246" fill="#aeb5d2" font-size="14">owned worker</text>
+  </g>
+  <g transform="translate(512 548)" filter="url(#glow)">
+    <circle r="210" fill="none" stroke="#333b60" stroke-width="2"/>
+    <circle r="172" fill="none" stroke="url(#accent)" stroke-width="5" stroke-dasharray="2 20"/>
+    <path d="M0 -172A172 172 0 0 1 149 86L0 0Z" fill="#667eea" fill-opacity="0.14" stroke="#9baeff" stroke-width="2"/>
+    <path d="M149 86A172 172 0 0 1 -149 86L0 0Z" fill="#d6b7ff" fill-opacity="0.12" stroke="#d6b7ff" stroke-width="2"/>
+    <path d="M-149 86A172 172 0 0 1 0 -172L0 0Z" fill="#7da6ff" fill-opacity="0.1" stroke="#7da6ff" stroke-width="2"/>
+    <circle r="8" fill="#f1efff"/>
+    <g fill="#f1efff" font-family="Inter,Arial,sans-serif" text-anchor="middle">
+      <text x="0" y="-224" font-size="17" font-weight="700">HASH RING</text>
+      <text x="-86" y="-58" font-size="16">SEGMENT A</text>
+      <text x="95" y="24" font-size="16">SEGMENT B</text>
+      <text x="-93" y="39" font-size="16">SEGMENT C</text>
+    </g>
+    <g fill="#b9c7ff" font-family="Inter,Arial,sans-serif" font-size="12" text-anchor="middle">
+      <text x="-80" y="-18">buckets</text><text x="80" y="76">buckets</text><text x="-80" y="76">buckets</text>
+    </g>
+  </g>
+  <g transform="translate(704 832)" font-family="Inter,Arial,sans-serif">
+    <text x="0" y="0" fill="#f1efff" font-size="17" font-weight="700">FULL SEGMENT</text>
+    <text x="0" y="26" fill="#aeb5d2" font-size="14">split locally, rehash keys</text>
+    <path d="M-40 -52L-10 -20M-10 -52L-40 -20" stroke="#ffb7cf" stroke-width="4" stroke-linecap="round"/>
+    <path d="M-108 -38H-52" stroke="#ffb7cf" stroke-width="2"/>
+    <circle cx="-124" cy="-38" r="16" fill="#ffb7cf" fill-opacity="0.2" stroke="#ffb7cf" stroke-width="2"/>
+  </g>
+  <g transform="translate(96 820)" font-family="Inter,Arial,sans-serif">
+    <rect width="430" height="70" rx="14" fill="#202640" stroke="#333b60"/>
+    <text x="22" y="29" fill="#f1efff" font-size="15" font-weight="700">BUCKETS</text>
+    <text x="22" y="51" fill="#aeb5d2" font-size="13">fixed slots · collisions · retry</text>
+    <g transform="translate(214 18)"><rect width="38" height="34" rx="5" fill="#7da6ff" fill-opacity="0.3" stroke="#7da6ff"/><rect x="46" width="38" height="34" rx="5" fill="#d6b7ff" fill-opacity="0.3" stroke="#d6b7ff"/><rect x="92" width="38" height="34" rx="5" fill="#333b60" stroke="#aeb5d2"/></g>
+  </g>
+</svg>
